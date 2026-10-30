@@ -21,9 +21,11 @@ Do not treat this skill, prior chat context, examples, or existing code as a sub
 - Audit all six Supabase areas: Database; Security & RLS; Database Functions & RPC; Edge Functions; Secrets & Configuration; Testing & Logs.
 - Follow the staged workflow: documentation audit → Supabase audit → requirements → recommendations → explicit approval → implementation → testing → security audit → final verification.
 - Default to read-only. Never infer approval.
-- Use the four non-inheriting permission levels (0 Audit, 1 Testing, 2 Data Testing, 3 Implementation & Deployment) defined in `workflows/edge-function-testing.md`. Testing permission is not deployment permission.
+- Use the four separate, non-inheriting permission levels (0 Audit, 1 non-mutating Testing, 2 isolated Data Testing, 3 specifically scoped Implementation/Deployment) defined in `workflows/edge-function-testing.md`.
+- **Level 1 is strictly non-mutating:** the complete request path must not write/change records or state and must not cause external effects. Reading an existing fixture is allowed only if the request remains read-only.
+- **Level 2 is required for every test-data write:** creating, updating, deleting, reserving, consuming, or otherwise changing test records/state requires explicit approval identifying the isolated data boundary, operations, and cleanup scope. A fixture being pre-approved or temporary does not convert a write into Level 1.
+- Provider calls, invoice/payment creation, notifications, and other external effects require separate explicit approval; Level 2 alone is insufficient.
 - Before invoking an Edge Function, obtain explicit scope-specific approval covering project, environment, function/endpoint, method, auth, payload, test cases, side effects, and data/cleanup scope.
-- Level 1 is limited to demonstrably non-mutating tests or previously approved isolated fixtures. Tests that write data require Level 2. Production tests and real external effects require separate explicit approval.
 - Use only an available, supported invocation mechanism. Listing, reading, or deploying Edge Functions does not establish that runtime invocation is available.
 - Explicit approval is required before any change to GitHub repository files, Supabase database, Edge Functions, secrets/configuration, deployment, or production integration.
 - Approval applies only to the named change group and scope. Stop and request new approval if scope expands.
