@@ -61,7 +61,7 @@ Approval for one group does not authorize another. Apply the permission levels i
 - Level 2: explicitly approved writes/updates/deletes to identified isolated test data and tests that produce those state changes.
 - Level 3: individually approved source/configuration changes and deployment actions.
 
-A test that writes is Level 2 even if it uses an existing fixture or cleanup is planned. External provider calls, invoice/payment creation, notifications, and other external effects require separate explicit approval. Before Level 1 or higher, record project/ref, environment, function/endpoint, method, auth, payload, test cases, side effects, and data/cleanup scope. Production tests require separate per-test approval.
+A test that writes is Level 2 even if it uses an existing fixture or cleanup is planned. Permission is exact-level and non-inheriting: Level 2 does not authorize Level 1-only read-only tests, and Level 3 does not authorize test invocation. External provider calls, invoice/payment creation, notifications, and other external effects require separate explicit approval. Before Level 1 or higher, record project/ref, environment, function/endpoint, method, auth, payload, test cases, side effects, and data/cleanup scope. Production tests require separate per-test approval.
 
 **Exit:** exact proposed action and permission level are approved.
 
