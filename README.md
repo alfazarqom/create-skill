@@ -23,6 +23,7 @@ Always re-check the current official documentation for the relevant contract bef
 │   ├── staged-workflow.md
 │   ├── documentation-audit.md
 │   ├── supabase-audit.md
+│   ├── edge-function-testing.md
 │   └── implementation-testing.md
 ├── templates/
 │   ├── audit-report.md
@@ -37,6 +38,21 @@ Always re-check the current official documentation for the relevant contract bef
 Documentation audit → Supabase audit → Requirements → Recommendations → Explicit approval → Implementation → Testing → Security audit → Final verification.
 
 Audits are read-only by default. Changes to GitHub, Supabase Database, Edge Functions, secrets/configuration, and deployment/production integration require explicit, scope-specific approval.
+
+## Edge Function testing permissions
+
+The skill uses four separate, non-inheriting permission levels:
+
+| Level | Mode | Scope |
+|---|---|---|
+| 0 | Audit | Read-only inspection; no function invocation |
+| 1 | Testing | Approved, non-mutating request tests or tests against already-approved isolated fixtures |
+| 2 | Data Testing | Explicitly approved writes/deletes to identified test data and tests that cause those test-data side effects |
+| 3 | Implementation & Deployment | Only specifically approved source/configuration changes and deployment |
+
+Before invoking a function, approval must identify the project/ref, environment, function/endpoint, method, authentication, payload, test cases, side effects, and data/cleanup scope. Production tests and real external effects require separate explicit approval. Level 1 does not authorize data mutation; Level 2 does not authorize source changes or deployment.
+
+Use `workflows/edge-function-testing.md` for the full policy. If no supported invocation mechanism is available, report the test as **Not Run**; do not treat source inspection or a successful deployment as runtime testing.
 
 ## Use
 
