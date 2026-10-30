@@ -2,6 +2,7 @@
 
 ## 1. Ringkasan
 - Status: Backend Ready / Belum Backend Ready
+- Skill version:
 - Scope verified:
 - Date:
 - Repository branch/commit:
@@ -23,6 +24,9 @@
 | Secrets/environment safe | | | |
 | Required tests passed | | | |
 | Permission level and approval scope complied with | | | |
+| Automated Skill validation passed | | | |
+| Permission gate simulation passed | | | |
+| Native Skill runtime execution | | | |
 | Security audit passed | | | |
 | Final evidence complete | | | |
 
@@ -30,7 +34,7 @@
 | Test | Permission level | Environment | Expected | Actual | Side effects | Result | Evidence |
 |---|---|---|---|---|---|---|---|
 
-Mark a test that was not actually invoked as **Not Run**, never Pass.
+Use **Not Run** for tests that were not actually invoked. Label policy-harness simulation separately from native Skill runtime and Edge Function runtime tests.
 
 ## 4. Changes verified
 - Git commit(s):
