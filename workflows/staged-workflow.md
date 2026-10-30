@@ -57,11 +57,11 @@ Approval must be explicit and scoped. The following always require approval:
 
 Approval for one group does not authorize another. Apply the permission levels in `edge-function-testing.md`:
 - Level 0: audit/read-only; no invocation.
-- Level 1: invoke only approved non-mutating tests or use an already-approved isolated test fixture.
-- Level 2: approved test-data writes/updates/deletes and tests that produce those test-data side effects.
-- Level 3: specifically approved source/configuration changes and deployment.
+- Level 1: only explicitly approved, demonstrably non-mutating tests with no external effects.
+- Level 2: explicitly approved writes/updates/deletes to identified isolated test data and tests that produce those state changes.
+- Level 3: individually approved source/configuration changes and deployment actions.
 
-Before Level 1 or higher, record project/ref, environment, function/endpoint, method, auth, payload, test cases, side effects, and data/cleanup scope. Production tests and real external effects require separate explicit approval. Permissions are non-inheriting.
+A test that writes is Level 2 even if it uses an existing fixture or cleanup is planned. External provider calls, invoice/payment creation, notifications, and other external effects require separate explicit approval. Before Level 1 or higher, record project/ref, environment, function/endpoint, method, auth, payload, test cases, side effects, and data/cleanup scope. Production tests require separate per-test approval.
 
 **Exit:** exact proposed action and permission level are approved.
 
@@ -78,9 +78,9 @@ Before Level 1 or higher, record project/ref, environment, function/endpoint, me
 ## Stage 7 — Testing
 
 - Follow `edge-function-testing.md` before invoking any Edge Function.
-- Start from Level 0; use Sandbox and isolated test fixtures by default.
-- Level 1 permits only approved non-mutating tests or tests using already-approved isolated fixtures. Any test that writes test data requires Level 2.
-- Production invocation, real payments, provider-side invoice creation, notifications, and other external effects require separate explicit approval naming the exact action and impact.
+- Start from Level 0; use Sandbox and isolated non-production environments by default.
+- Level 1 is read-only/non-mutating across the complete request path. Any test-data write requires Level 2.
+- Provider calls and other external effects require separate explicit approval.
 - Use only a supported invocation mechanism. If none is available, mark runtime test **Not Run** and explain the limitation.
 - Test positive, negative, duplicate, replay, concurrency, and partial-failure paths as relevant.
 - Record expected/actual results, environment, redacted request/response evidence, observed side effects, and cleanup status.
@@ -98,6 +98,7 @@ Before Level 1 or higher, record project/ref, environment, function/endpoint, me
 ## Stage 9 — Final verification and readiness
 
 - Verify the approved diff, actual database/function state, test results, and official POP contract mapping.
+- Run `python scripts/validate_skill.py` for repository Skill structure and permission-policy scenario validation.
 - Use `tests/acceptance-checklist.md`.
 - Report **Backend Ready** only if every mandatory criterion is verified.
 
