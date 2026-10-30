@@ -91,7 +91,7 @@
       "level": 2,
       "action": "invoke",
       "approved_scope": true,
-      "mutates_data": false,
+      "mutates_data": true,
       "external_effect": true,
       "isolated_test_data": false,
       "production": false,
@@ -174,6 +174,35 @@
       "isolated_test_data": false,
       "production": false,
       "deployment_approved": false,
+      "expected": "DENY"
+    },
+    {
+      "id": "PG-15",
+      "level": 2,
+      "action": "invoke",
+      "approved_scope": true,
+      "mutates_data": false,
+      "external_effect": false,
+      "isolated_test_data": false,
+      "production": false,
+      "expected": "DENY"
+    },
+    {
+      "id": "PG-16",
+      "level": 3,
+      "action": "invoke",
+      "approved_scope": true,
+      "mutates_data": false,
+      "external_effect": false,
+      "isolated_test_data": false,
+      "production": false,
+      "expected": "DENY"
+    },
+    {
+      "id": "PG-17",
+      "level": 1,
+      "action": "inspect",
+      "approved_scope": true,
       "expected": "DENY"
     }
   ]
