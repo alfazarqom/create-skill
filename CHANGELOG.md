@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.2.0 — 2026-10-31
+
+- Clarified the Level 1/Level 2 boundary: Level 1 is strictly non-mutating across the complete request path; every test-data/state mutation requires Level 2.
+- Required separate explicit approval for provider calls, invoice/payment creation, notifications, and other external effects.
+- Added dependency-free automated Skill validation for required files, frontmatter, internal Markdown links, permission-policy wording, and permission-gate scenario outcomes.
+- Added machine-readable permission-gate scenarios and a deterministic policy simulation harness.
+- Added explicit reporting distinction between static validation, simulated policy tests, native Skill runtime execution, and Edge Function runtime tests.
+- Updated README, core Skill policy, staged workflow, implementation/testing workflow, acceptance checklist, and verification report template.
+
 ## 1.1.0 — 2026-10-31
 
 - Added a four-level, non-inheriting permission model for Supabase Edge Function audit, testing, test-data mutation, and implementation/deployment.

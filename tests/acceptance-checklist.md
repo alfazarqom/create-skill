@@ -6,12 +6,22 @@ All mandatory items must be checked with evidence. An unchecked or unverified ma
 
 - [ ] Permission level (0–3) is recorded and matches the action performed.
 - [ ] Level 1+ approval identifies project/ref, environment, function/endpoint, method, auth, payload, test cases, side effects, and data/cleanup scope.
-- [ ] Permission levels are treated as separate and non-inheriting.
-- [ ] Level 1 tests are non-mutating or use previously approved isolated fixtures.
-- [ ] Test-data writes/deletes have explicit Level 2 approval.
-- [ ] Source/configuration changes and deployment have separate, specific Level 3 approval.
-- [ ] Production tests and real provider-side effects have separate explicit approval.
+- [ ] Permission levels are separate and non-inheriting.
+- [ ] Level 1 request paths are demonstrably non-mutating, including no external effects; existing fixture reads are allowed only when read-only.
+- [ ] Every test-data write/change has explicit Level 2 approval and an identified isolated data boundary.
+- [ ] Planned cleanup is explicitly included in Level 2 approval; cleanup is not assumed.
+- [ ] Provider calls, invoice/payment creation, notifications, and other external effects have separate explicit approval.
+- [ ] Source/configuration changes and deployment actions have separate, specific Level 3 approval.
+- [ ] Production tests have separate per-test explicit approval.
 - [ ] No secrets or unnecessary personal/payment data were exposed.
+
+## Skill repository validation
+
+- [ ] `python scripts/validate_skill.py` passes.
+- [ ] Required Skill files and frontmatter are present.
+- [ ] Internal Markdown links resolve.
+- [ ] Permission gate scenarios pass the automated policy harness.
+- [ ] Simulation results are not represented as native Skill runtime or Edge Function runtime evidence.
 
 ## Documentation contract
 
