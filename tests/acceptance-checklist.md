@@ -2,6 +2,17 @@
 
 All mandatory items must be checked with evidence. An unchecked or unverified mandatory item means **Belum Backend Ready**.
 
+## Permission and authorization
+
+- [ ] Permission level (0–3) is recorded and matches the action performed.
+- [ ] Level 1+ approval identifies project/ref, environment, function/endpoint, method, auth, payload, test cases, side effects, and data/cleanup scope.
+- [ ] Permission levels are treated as separate and non-inheriting.
+- [ ] Level 1 tests are non-mutating or use previously approved isolated fixtures.
+- [ ] Test-data writes/deletes have explicit Level 2 approval.
+- [ ] Source/configuration changes and deployment have separate, specific Level 3 approval.
+- [ ] Production tests and real provider-side effects have separate explicit approval.
+- [ ] No secrets or unnecessary personal/payment data were exposed.
+
 ## Documentation contract
 
 - [ ] Current official Duitku POP documentation reviewed for every relevant flow.
@@ -29,6 +40,9 @@ All mandatory items must be checked with evidence. An unchecked or unverified ma
 - [ ] Callback verifies signature and transaction mapping before mutation.
 - [ ] Browser return/JS callback cannot mutate authoritative payment state.
 - [ ] Failures are safely handled and recoverable.
+- [ ] Invocation mechanism was available and documented for every claimed runtime test.
+- [ ] Tests not actually invoked are marked **Not Run**, not Pass.
+- [ ] Observed side effects match approved scope; test data cleanup status is recorded.
 
 ## Security & RLS
 
