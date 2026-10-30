@@ -39,7 +39,7 @@ Before any runtime invocation, follow `edge-function-testing.md`. The four level
 - **Level 2 — Data Testing:** required for every test that creates, updates, deletes, reserves, consumes, or otherwise changes test records/application state. Approval must identify isolated test data, exact mutations, and cleanup scope.
 - **Level 3 — Implementation & Deployment:** only individually approved source/configuration changes and deployment actions; not implied by testing approval.
 
-A pre-existing or approved fixture does not make a write a Level 1 test. Any provider call, invoice/payment creation, notification, or other external effect requires separate explicit approval; Level 2 alone is insufficient.
+A pre-existing or approved fixture does not make a write a Level 1 test. Permission is exact-level and non-inheriting: Level 2 does not authorize Level 1-only read-only tests, and Level 3 does not authorize test invocation. Any provider call, invoice/payment creation, notification, or other external effect requires separate explicit approval; Level 2 alone is insufficient.
 
 Approval must identify project/ref, environment, function/endpoint, HTTP method, auth, payload, test cases, expected effects, and data/cleanup scope. Production tests and real provider-side effects require separate explicit approval. If a function can write data and only Level 1 is approved, do not invoke it.
 
