@@ -40,17 +40,17 @@ def permission_decision(case: dict) -> str:
     if level not in (0, 1, 2, 3) or not case.get("approved_scope", False):
         return "DENY"
     if action == "inspect":
-        return "ALLOW" if level >= 0 else "DENY"
+        return "ALLOW" if level == 0 else "DENY"
     if action == "invoke":
-        if level == 0:
-            return "DENY"
         if case.get("production") and not case.get("production_test_approved", False):
             return "DENY"
         if case.get("external_effect") and not case.get("external_effect_approved", False):
             return "DENY"
         if case.get("mutates_data"):
-            return "ALLOW" if level >= 2 and case.get("isolated_test_data", False) else "DENY"
-        return "ALLOW" if level >= 1 else "DENY"
+            return "ALLOW" if level == 2 and case.get("isolated_test_data", False) else "DENY"
+        if case.get("external_effect"):
+            return "ALLOW" if level == 2 else "DENY"
+        return "ALLOW" if level == 1 else "DENY"
     if action == "modify_source":
         return "ALLOW" if level == 3 and case.get("source_change_approved", False) else "DENY"
     if action == "deploy":
