@@ -92,7 +92,7 @@ def main() -> int:
         "Level 2",
         "complete request path",
         "external effects",
-        "does not make a write a Level 1 test",
+        "does not make a mutating request Level 1",
     ):
         check(phrase.lower() in edge_text.lower(),
               f"Permission policy missing/unclear required phrase: {phrase}")
