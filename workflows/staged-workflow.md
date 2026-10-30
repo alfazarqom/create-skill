@@ -53,10 +53,17 @@ Approval must be explicit and scoped. The following always require approval:
 - Edge Function changes.
 - Secrets and configuration changes.
 - Deployment or production integration.
+- Edge Function invocation when it may cause writes or external side effects.
 
-Approval for one group does not authorize another. Stop if scope expands.
+Approval for one group does not authorize another. Apply the permission levels in `edge-function-testing.md`:
+- Level 0: audit/read-only; no invocation.
+- Level 1: invoke only approved non-mutating tests or use an already-approved isolated test fixture.
+- Level 2: approved test-data writes/updates/deletes and tests that produce those test-data side effects.
+- Level 3: specifically approved source/configuration changes and deployment.
 
-**Exit:** exact proposed change group is approved.
+Before Level 1 or higher, record project/ref, environment, function/endpoint, method, auth, payload, test cases, side effects, and data/cleanup scope. Production tests and real external effects require separate explicit approval. Permissions are non-inheriting.
+
+**Exit:** exact proposed action and permission level are approved.
 
 ## Stage 6 — Implementation
 
@@ -64,16 +71,20 @@ Approval for one group does not authorize another. Stop if scope expands.
 - Keep changes small and reviewable.
 - Preserve existing architecture and business rules unless explicitly included.
 - Never expose secrets or add credentials to the repository.
-- Do not deploy unless deployment is separately approved.
+- Do not deploy unless deployment is separately approved under Level 3.
 
 **Exit:** approved changes are complete and diff is reviewable.
 
 ## Stage 7 — Testing
 
-- Run relevant static checks and automated tests.
-- Use Sandbox and isolated test fixtures by default.
-- Test positive, negative, duplicate, replay, concurrency, and partial-failure paths.
-- Do not perform real payments or mutate production data without specific approval.
+- Follow `edge-function-testing.md` before invoking any Edge Function.
+- Start from Level 0; use Sandbox and isolated test fixtures by default.
+- Level 1 permits only approved non-mutating tests or tests using already-approved isolated fixtures. Any test that writes test data requires Level 2.
+- Production invocation, real payments, provider-side invoice creation, notifications, and other external effects require separate explicit approval naming the exact action and impact.
+- Use only a supported invocation mechanism. If none is available, mark runtime test **Not Run** and explain the limitation.
+- Test positive, negative, duplicate, replay, concurrency, and partial-failure paths as relevant.
+- Record expected/actual results, environment, redacted request/response evidence, observed side effects, and cleanup status.
+- Stop if actual effects exceed the approved scope. Do not clean up test data unless cleanup was approved.
 
 **Exit:** actual results and evidence are recorded; failures are not hidden.
 
@@ -100,4 +111,5 @@ Stop the affected workflow and report when:
 - The live project/environment cannot be identified.
 - An unapproved change is required.
 - A test would cause a real payment or production mutation without approval.
+- No supported invocation mechanism is available for a requested runtime test.
 - A critical mismatch or security issue makes continued execution unsafe.
