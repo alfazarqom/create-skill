@@ -25,6 +25,10 @@ Classify by the **actual side effect of the request**, not by the test's label o
 - If side effects are unknown, cannot be ruled out, or extend beyond the approved test-data boundary, do not invoke. Resolve the uncertainty or report **Blocked**.
 - Provider calls, invoice creation, payments, notifications, and other external effects require separate explicit approval naming the exact effect, provider/environment, and expected impact. Level 2 alone does not authorize them.
 
+### Non-inheritance enforcement
+
+The gate is exact-level, not cumulative: Level 0 authorizes inspection only; Level 1 authorizes non-mutating invocation only; Level 2 authorizes identified isolated test-data mutations only (and any invocation must be part of that approved data test); Level 3 authorizes only specifically listed source/configuration/deployment actions. A Level 2 approval does not also grant Level 1 read-only testing, and Level 3 does not grant Level 1/2 test invocation. Obtain the permission level matching the requested action; separately approve production and external effects.
+
 Level 3 is not blanket authorization. Source changes, configuration changes, and deployment must each be listed in the approved scope. Secret values must never be retrieved, displayed, copied into chat, or committed.
 
 ## Required approval record before Level 1 or higher
