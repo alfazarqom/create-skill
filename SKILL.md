@@ -21,7 +21,7 @@ Do not treat this skill, prior chat context, examples, or existing code as a sub
 - Audit all six Supabase areas: Database; Security & RLS; Database Functions & RPC; Edge Functions; Secrets & Configuration; Testing & Logs.
 - Follow the staged workflow: documentation audit → Supabase audit → requirements → recommendations → explicit approval → implementation → testing → security audit → final verification.
 - Default to read-only. Never infer approval.
-- Use the four separate, non-inheriting permission levels (0 Audit, 1 non-mutating Testing, 2 isolated Data Testing, 3 specifically scoped Implementation/Deployment) defined in `workflows/edge-function-testing.md`.
+- Use the four separate, non-inheriting permission levels (0 Audit, 1 non-mutating Testing, 2 isolated Data Testing, 3 specifically scoped Implementation/Deployment) defined in `workflows/edge-function-testing.md`. Each action requires its matching level; Level 2/3 approval does not authorize test invocation at another level.
 - **Level 1 is strictly non-mutating:** the complete request path must not write/change records or state and must not cause external effects. Reading an existing fixture is allowed only if the request remains read-only.
 - **Level 2 is required for every test-data write:** creating, updating, deleting, reserving, consuming, or otherwise changing test records/state requires explicit approval identifying the isolated data boundary, operations, and cleanup scope. A fixture being pre-approved or temporary does not convert a write into Level 1.
 - Provider calls, invoice/payment creation, notifications, and other external effects require separate explicit approval; Level 2 alone is insufficient.
