@@ -28,7 +28,22 @@ Wait for explicit approval of this exact scope.
 - Validate callbacks before state mutation.
 - Use atomic, conditional state transitions and idempotency protections.
 - Do not silently change customer checkout, shipping, stock, or order business rules.
-- Do not deploy without separate explicit deployment approval.
+- Do not deploy without separate explicit deployment approval (Level 3).
+
+## Edge Function invocation permission gate
+
+Before any runtime invocation, follow `edge-function-testing.md`. The four levels are separate and non-inheriting:
+
+- **Level 0 — Audit:** inspect only; do not invoke.
+- **Level 1 — Testing:** invoke only explicitly approved non-mutating requests or tests against already-approved isolated fixtures.
+- **Level 2 — Data Testing:** explicitly approved creation/update/deletion of identified test records and tests that produce those side effects.
+- **Level 3 — Implementation & Deployment:** specifically approved source/configuration changes and deployment; not implied by testing approval.
+
+Approval must identify project/ref, environment, function/endpoint, HTTP method, auth, payload, test cases, expected effects, and data/cleanup scope. Production tests and real provider-side effects require separate explicit approval. If a function can write data and only Level 1 is approved, do not invoke it.
+
+Use only a supported invocation mechanism. Supabase tools that list, read, or deploy Edge Functions do not automatically provide invocation capability. If invocation is unavailable, mark the runtime test **Not Run**. Never report a static review as an executed test.
+
+Never expose secret values, access tokens, raw authorization headers, or unnecessary personal/payment data. Stop on unexpected side effects or scope drift. Cleanup requires explicit inclusion in the approval.
 
 ## Minimum invoice tests
 
