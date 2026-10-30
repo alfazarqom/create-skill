@@ -67,7 +67,7 @@ Run with Python 3.9+ and no third-party dependencies:
 python scripts/validate_skill.py
 ```
 
-The validator checks required files, Skill frontmatter, internal Markdown links, key permission-boundary statements, scenario schema, and all permission-gate scenario outcomes. A successful result is static/documentation and policy-harness validation; it is not proof of native Agent Skill runtime behavior, Edge Function invocation, or backend readiness.
+The validator checks required files, Skill frontmatter, internal Markdown links, key permission-boundary statements, scenario schema, and all permission-gate scenario outcomes. See `tests/validation-report-1.2.0.md` for the recorded simulation result and limitations. A successful result is static/documentation and policy-harness validation; it is not proof of native Agent Skill runtime behavior, Edge Function invocation, or backend readiness.
 
 ## Permission gate scenarios
 
