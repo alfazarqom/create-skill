@@ -7,6 +7,8 @@
 - Repository branch/commit:
 - Supabase project ref:
 - Environment tested:
+- Permission level used:
+- Explicit approval scope/reference:
 
 ## 2. Acceptance results
 | Criterion | Result (Pass/Fail/Unverified) | Evidence | Limitation |
@@ -20,12 +22,15 @@
 | RLS/grants/RPC security passed | | | |
 | Secrets/environment safe | | | |
 | Required tests passed | | | |
+| Permission level and approval scope complied with | | | |
 | Security audit passed | | | |
 | Final evidence complete | | | |
 
 ## 3. Tests executed
-| Test | Environment | Expected | Actual | Result | Evidence |
-|---|---|---|---|---|---|
+| Test | Permission level | Environment | Expected | Actual | Side effects | Result | Evidence |
+|---|---|---|---|---|---|---|---|
+
+Mark a test that was not actually invoked as **Not Run**, never Pass.
 
 ## 4. Changes verified
 - Git commit(s):
@@ -37,6 +42,7 @@
 - Blocking:
 - Non-blocking:
 - Unverified:
+- Test-data cleanup status:
 
 ## 6. Production boundary
 - Real payment performed? Yes/No
