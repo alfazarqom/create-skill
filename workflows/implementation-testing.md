@@ -34,16 +34,18 @@ Wait for explicit approval of this exact scope.
 
 Before any runtime invocation, follow `edge-function-testing.md`. The four levels are separate and non-inheriting:
 
-- **Level 0 — Audit:** inspect only; do not invoke.
-- **Level 1 — Testing:** invoke only explicitly approved non-mutating requests or tests against already-approved isolated fixtures.
-- **Level 2 — Data Testing:** explicitly approved creation/update/deletion of identified test records and tests that produce those side effects.
-- **Level 3 — Implementation & Deployment:** specifically approved source/configuration changes and deployment; not implied by testing approval.
+- **Level 0 — Audit:** inspect only; never invoke.
+- **Level 1 — Testing:** invoke only when the complete request path is demonstrably non-mutating and causes no external effect. Reading an existing fixture is permitted only if it remains read-only.
+- **Level 2 — Data Testing:** required for every test that creates, updates, deletes, reserves, consumes, or otherwise changes test records/application state. Approval must identify isolated test data, exact mutations, and cleanup scope.
+- **Level 3 — Implementation & Deployment:** only individually approved source/configuration changes and deployment actions; not implied by testing approval.
+
+A pre-existing or approved fixture does not make a write a Level 1 test. Any provider call, invoice/payment creation, notification, or other external effect requires separate explicit approval; Level 2 alone is insufficient.
 
 Approval must identify project/ref, environment, function/endpoint, HTTP method, auth, payload, test cases, expected effects, and data/cleanup scope. Production tests and real provider-side effects require separate explicit approval. If a function can write data and only Level 1 is approved, do not invoke it.
 
-Use only a supported invocation mechanism. Supabase tools that list, read, or deploy Edge Functions do not automatically provide invocation capability. If invocation is unavailable, mark the runtime test **Not Run**. Never report a static review as an executed test.
+Use only a supported invocation mechanism. Supabase tools that list, read, or deploy Edge Functions do not automatically provide invocation capability. If invocation is unavailable, mark runtime test **Not Run**. Never report a static review or simulated permission-policy test as an executed Edge Function test.
 
-Never expose secret values, access tokens, raw authorization headers, or unnecessary personal/payment data. Stop on unexpected side effects or scope drift. Cleanup requires explicit inclusion in the approval.
+Never expose secret values, access tokens, raw authorization headers, or unnecessary personal/payment data. Stop on unexpected side effects or scope drift. Cleanup requires explicit inclusion in the Level 2 approval.
 
 ## Minimum invoice tests
 
@@ -87,7 +89,6 @@ Where the existing business model includes inventory effects:
 - Browser callback/redirect cannot mark an order paid.
 - Guest tracking reveals only approved minimal data.
 - Rate limiting and abuse protections are verified where required.
-- Logs do not contain secrets or unnecessary personal data.
 
 ## Final verification
 
