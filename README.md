@@ -57,7 +57,7 @@ The skill uses four separate, non-inheriting permission levels:
 
 **Level 1 vs Level 2:** classify the complete request path by actual side effects. Any database/application-state mutation requires Level 2, including temporary fixture writes and planned cleanup. Merely reading an existing fixture can remain Level 1 if the request does not mutate anything. Provider calls, invoice/payment creation, notifications, and other external effects require separate explicit approval.
 
-Before invoking a function, approval must identify the project/ref, environment, function/endpoint, method, authentication, payload, test cases, side effects, and data/cleanup scope. Production tests and real external effects require separate explicit approval. Level 1 does not authorize mutation; Level 2 does not authorize source changes or deployment.
+Before invoking a function, approval must identify the project/ref, environment, function/endpoint, method, authentication, payload, test cases, side effects, and data/cleanup scope. Production tests and real external effects require separate explicit approval. Permission is exact-level and non-inheriting: Level 2 does not authorize Level 1-only read-only invocation, and Level 3 does not authorize Level 1/2 test invocation. Level 1 does not authorize mutation; Level 2 does not authorize source changes or deployment.
 
 ## Automated validation
 
