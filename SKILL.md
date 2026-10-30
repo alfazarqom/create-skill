@@ -21,6 +21,10 @@ Do not treat this skill, prior chat context, examples, or existing code as a sub
 - Audit all six Supabase areas: Database; Security & RLS; Database Functions & RPC; Edge Functions; Secrets & Configuration; Testing & Logs.
 - Follow the staged workflow: documentation audit → Supabase audit → requirements → recommendations → explicit approval → implementation → testing → security audit → final verification.
 - Default to read-only. Never infer approval.
+- Use the four non-inheriting permission levels (0 Audit, 1 Testing, 2 Data Testing, 3 Implementation & Deployment) defined in `workflows/edge-function-testing.md`. Testing permission is not deployment permission.
+- Before invoking an Edge Function, obtain explicit scope-specific approval covering project, environment, function/endpoint, method, auth, payload, test cases, side effects, and data/cleanup scope.
+- Level 1 is limited to demonstrably non-mutating tests or previously approved isolated fixtures. Tests that write data require Level 2. Production tests and real external effects require separate explicit approval.
+- Use only an available, supported invocation mechanism. Listing, reading, or deploying Edge Functions does not establish that runtime invocation is available.
 - Explicit approval is required before any change to GitHub repository files, Supabase database, Edge Functions, secrets/configuration, deployment, or production integration.
 - Approval applies only to the named change group and scope. Stop and request new approval if scope expands.
 - Never expose secret values, API keys, signatures containing sensitive data, access tokens, raw authorization headers, or unnecessary customer/payment data.
@@ -44,6 +48,7 @@ Follow `workflows/staged-workflow.md`. Detailed stage procedures:
 
 - Documentation: `workflows/documentation-audit.md`
 - Supabase: `workflows/supabase-audit.md`
+- Edge Function test permissions and invocation: `workflows/edge-function-testing.md`
 - Implementation, testing, and verification: `workflows/implementation-testing.md`
 
 Do not proceed to implementation merely because an audit is complete. First present verified findings, recommendations, exact requirements, and a scoped change plan; then wait for explicit approval.
