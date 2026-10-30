@@ -93,7 +93,7 @@
       "approved_scope": true,
       "mutates_data": true,
       "external_effect": true,
-      "isolated_test_data": false,
+      "isolated_test_data": true,
       "production": false,
       "external_effect_approved": true,
       "deployment_approved": false,
